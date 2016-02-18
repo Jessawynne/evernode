@@ -4,13 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Note = mongoose.model('Notes',  mongoose.Schema({
-    title: String,
-    text: String
-}));
-
 const app = express();
 const port = process.env.PORT || 3000;
+
+const Note = require('./models/note');
 
 //all middlewares come before all routes
 app.set('view engine', 'jade');
