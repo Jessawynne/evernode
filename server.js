@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 
 const noteRoute = require('./routes/notes');
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({
   //how to you want to handle the extended character set
   extended: false
 }));
+app.use(methodOverride('_method'));
 
 //creates a root route
 app.get('/', (req, res) => {
