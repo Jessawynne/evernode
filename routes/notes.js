@@ -3,6 +3,8 @@ const router = express.Router();
 
 const noteCtrl = require('../controllers/note');
 
+router.get('/notes', noteCtrl.index);
+
 router.get('/notes/new', noteCtrl.newNote);
 
 router.get('/notes/:id', noteCtrl.show);
