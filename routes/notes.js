@@ -1,27 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const Note = require('../models/note');
+const noteCtrl = require('../controllers/note');
 
-router.get('/notes/new', (req, res) => {
-  res.render('new-note');
-});
+router.get('/notes/new', noteCtrl.newNote);
 
-//routing order MATTERS when using a routing param aka :id
-router.get('/notes/:id', (req, res) => {
-  Note.findById(req.params.id, (err, note) => {
-    if (err) throw err;
+router.get('/notes/:id', noteCtrl.show);
 
-    res.render('show-note', {note: note});
-  });
-});
-
-router.post('/notes', (req, res) => {
-  Note.create(req.body, (err, note) => {
-    if (err) throw err;
-
-    res.redirect(`/notes/${note._id}`);
-  });
-});
+router.post('/notes', noteCtrl.create);
 
 module.exports = router;
