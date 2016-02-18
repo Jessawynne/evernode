@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 
-const noteRoute = require('./routes/notes');
+const logger = require('./lib/logger');
+const noteRoutes = require('./routes/notes');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -16,12 +17,13 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(methodOverride('_method'));
+app.use(logger);
 
 //creates a root route
 app.get('/', (req, res) => {
   res.send('Server Running');
 });
-app.use(noteRoute);
+app.use(noteRoutes);
 
 mongoose.connect('mongodb://localhost:27017/evernode', (err) => {
   if (err) throw err;
