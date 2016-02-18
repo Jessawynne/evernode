@@ -4,18 +4,14 @@ const Note = require('../models/note');
 
 module.exports = {
   edit (req, res) {
-    Note.findById(req.params.id, (err, note) => {
-      if (err) throw err;
-
-      res.render('new-note', {note: note});
-    });
+    res.render('new-note', {note: req.note});
   },
 
   update (req, res) {
-    Note.findByIdAndUpdate(req.params.id, req.body, (err, note) => {
+    req.note.update(req.body, (err) => {
       if (err) throw err;
 
-      res.redirect(`/notes/${note._id}`);
+      res.redirect(`/notes/${req.note._id}`);
     });
   },
 
@@ -33,11 +29,7 @@ module.exports = {
   },
 
   show (req, res) {
-    Note.findById(req.params.id, (err, note) => {
-      if (err) throw err;
-
-      res.render('show-note', {note: note});
-    });
+    res.render('show-note', {note: req.note});
   },
 
   create (req, res) {
@@ -49,9 +41,9 @@ module.exports = {
   },
 
   destroy (req, res) {
-    Note.findByIdAndRemove(req.params.id, (err) => {
+    req.note.remove((err) => {
       if (err) throw err;
-      //redirect to notes index after deletion
+
       res.redirect('/notes');
     });
   }
