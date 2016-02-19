@@ -6,7 +6,10 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 
 const logger = require('./lib/logger');
+
 const noteRoutes = require('./routes/notes');
+const categoryRoutes = require('./routes/categories');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -23,7 +26,9 @@ app.use(logger);
 app.get('/', (req, res) => {
   res.send('Server Running');
 });
+//routes
 app.use(noteRoutes);
+app.use(categoryRoutes);
 
 mongoose.connect('mongodb://localhost:27017/evernode', (err) => {
   if (err) throw err;
