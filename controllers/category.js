@@ -21,6 +21,10 @@ module.exports = {
 
       res.redirect('/categories'); 
     });
+  }, 
+
+  show (req, res) {
+    res.render('show-category', {category: req.category});
   }
 
 };

@@ -7,7 +7,11 @@ const noteCtrl = require('../controllers/note');
 const Note = require('../models/note');
 
 router.param('id', (req, res, next, id) => {
-  Note.findById(id, (err, note) => {
+  Note
+    .findById(id)
+    .populate('category')
+    //build query then execute
+    .exec((err, note) => {
     if (err) throw err;
 
     req.note = note; 
@@ -17,7 +21,7 @@ router.param('id', (req, res, next, id) => {
 
 router.get('/notes', noteCtrl.index);
 
-router.get('/notes/new', noteCtrl.newNote);
+router.get('/notes/new', noteCtrl.new);
 
 router.get('/notes/:id', noteCtrl.show);
 
